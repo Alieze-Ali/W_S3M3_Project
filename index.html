@@ -6,7 +6,7 @@
 </head>
 
 <body>
-  <h1>JavaScript in the Wild</h1>
+  <h1>JavaScript in the Wild MP</h1>
   <p>Please load this file in VSCode and Chrome, and open the Console in Chrome Dev Tools.</p>
   <p>Work through the challenges found inside the script tag in this document,
     until the Console reports all tests passing.</p>
@@ -29,16 +29,51 @@
     // ❗ Notes
     // 🧠 Try using destructuring to grab a reference to the first element of the array
     // 🧠 Try using the at method of arrays to grab the last element
-    const swapper = () => {
-
+    // Step 1: Pass array
+    // Step 2: Deal with your edge case logic: if the length of the array is < 2: return 'No swap performed'
+    // Step 3: Create a variables to grab all the necessary elements:
+        // 3a: to grab the first element with destructuring
+        // 3b: Use .at() method to grab the last element & assign to a variable
+        // 3c: Use .slice () to grab al the elements in the middle & assign to a variable
+    // Step 4: Construct the result array with elements swapped: 
+        // 4a: assign result to an array, 
+        // 4b: pass in lastElement, all of the REST of the middle elements, and the firstElement
+    // Step 6: Return result
+    const swapper = (arr) => {
+      if (arr.length < 2) {
+        return 'No swap performed'
+      }
+      const [firstElement] = arr // this is destructuring - if it wasn't it would be const [first] = arr[0]
+      const lastElement = arr.at(-1) // this is NOT destructuring
+      const midElements = arr.slice(1, -1)
+      // console.log(firstElement)
+      // console.log(lastElement)
+      // console.log(midElements)
+      let result = [lastElement, ...midElements, firstElement]
+      return result
     }
+
+    // Gab's Solution
+    // const swapper = (arr) => {
+    //   if (arr.length < 2) {
+    //     return 'No swap performed'
+    //   }
+    //   let [first] = arr
+    //   let last = arr.at(-1)
+
+    //   arr[0] = last // assigning the first element in array to the last element in the array
+    //   arr[arr.length-1] = first // assigning the last element in the array to the first var
+
+    //   return arr
+    // }
+
 
     // 👉 CHALLENGE 2
     // 🧠 The function headAndTail takes an array as its argument.
     // 🧠 It returns a new array with two elements.
     // 🧠 The first element is the head of the original array.
     // 🧠 The second element is the tail of the original array.
-    // 🧠 If the given array is empty, return the string "This array is empty"
+    // 🧠 If the given array is empty, return the string "This array is empty" - edge case
     // 🧠 Examples of usage:
     // headAndTail([1, 2, 3]) // should return [1, [2, 3]]
     // ❗ Notes
@@ -46,9 +81,26 @@
     // 🧠 Try using the ternary operator instead of a conditional statement when deciding what to return.
     // 🧠 So instead of doing `if ('foo') return 'bar' else return 'baz'` do `return 'foo' ? 'bar' : 'baz'`
     // 🧠 The above recommendations allow to write the whole function body in just two clean lines!
-    const headAndTail = () => {
+    // Step 1: Pass array argument
+    // Step 2: Add edge case logic with ternary operators: 
+      // 2a: return the length of the array if it striclty equals 0 
+      // 2b: ? 'This array is empty'
+      // 2c: : [array at index 0, slice array at 1]
 
+    // const headAndTail = (arr) => {
+    //   return arr.length === 0
+    //   ? 'This array is empty'
+    //   : [arr[0], arr.slice(1)]
+    //   }
+      
+    // Gab's Solution
+    const headAndTail = (nums) => {
+      let [head, ...tail] = nums // destructuring and gathering the rest in a pattern from the nums array
+      return nums.length // if the length of nums array is truthy
+      ? [head, tail] // return head & tail
+      : 'This array is empty' // else return string
     }
+    
 
     // 👉 CHALLENGE 3
     // 🧠 The function devGreet takes an isFrontend Boolean, and an isHappy Boolean, as arguments.
@@ -59,8 +111,25 @@
     // devGreet(false, false) // should return "Hey, I am a backend dev and I am sad"
     // ❗ Notes
     // 🧠 Use ternary expressions to construct the string.
-    const devGreet = () => {
+    // Note: Ternary Syntax: condition ? trueExpression : falseExpression;
+    // Step 1: Pass arguments
+    // Step 2: check isFrontend condition : To Evaluate if isFrontend is true: return the value of isFrontend
+    // Step 3: Contruct the frontend response
+      // 3a: use a template literal with back tics to dynamically represent isHappy boolean
+      // 3b: inside the template literal, use another ternary operator to evaluate ? for isHappy (if )'happy' use : (else) 'sad'
+    // Step 4: Construct the backend response
+      // 4a: use : operator to check the backend condtion 
+      // 4b: and repeat steps 3a, 3b above
 
+    // const devGreet = (isFrontend, isHappy) => {
+    //  return isFrontend
+    //   ? `Hey, I am a frontend dev and I am ${isHappy ? 'happy' : 'sad'}`
+    //   : `Hey, I am a backend dev and I am ${isHappy  ? 'happy': 'sad'}`
+    // }
+
+    // Gab's Solution
+    const devGreet = (isFrontend, isHappy) => {
+      return `Hey, I am a ${isFrontend ? 'frontend' : 'backend'} dev and I am ${isHappy ? 'happy' : 'sad'}` // destructuring arrays
     }
 
     // 👉 CHALLENGE 4
@@ -72,9 +141,24 @@
     // recognize({}) // should return "Hidden Person Rocks!"
     // ❗ Notes
     // 🧠 Try using destructuring to grab the name, and a return followed by a ternary expression.
-    const recognize = () => {
-
+    // Step 1: Pass in the destructured name property on the user as an argument
+    // Step 2: Return the name property and add ternary logic
+        // if (?) there is a name return "<name> Rules!"
+        // else (:) return "Hidden Person Rocks!"
+    const recognize = ({ name }) => { // destructuring objects
+      return name
+      ? `${name} Rules!`
+      : 'Hidden Person Rocks!'
     }
+
+    // // Gab's Solution
+    // const recognize = (person) => {
+    //   // const name = person.name
+    //   const { name } = person // destructured version of above line
+    //   return name 
+    //   ? `${name} Rules!`
+    //   : 'Hidden Person Rocks!'
+    // }
 
     // 👉 CHALLENGE 5
     // 🧠 The function processBooleans takes an array of Booleans represented using integers (1/0 instead of true/false)
@@ -83,9 +167,19 @@
     // processBooleans([1, 0, 0, 1, 0]) // should return ["Y", "N", "N", "Y", "N"]
     // ❗ Notes
     // 🧠 Using map, arrow function syntax, and the ternary, you can make this function a short one-liner
-    const processBooleans = () => {
+    // Step 1: Pass the booleanArray
+    // Step 2: Map over the booleans Array
+    // Step 3: Define the arrow function for mapping
+    // Step 4: Evaluate the condition
+    // Step 5: Return the corresponding string
+    // Step 6: Crate the new array
+    // Step 7: Test in the console by calling the function with some arguments
+    // const processBooleans = (booleansArr) => {
+    //   return booleansArr.map(boolean => boolean === 1 ? "Y" : "N")
+    // }
 
-    }
+    // Gab's Solution
+    const processBooleans = bools => bools.map(int => int ? 'Y' : 'N') // if int is truthy return 'Y', else 'N', and note with a single arrow function argument, we don't need ()
 
     // 👉 CHALLENGE 6
     // 🧠 The function reverseString takes a string as its argument, and returns it reversed.
@@ -97,8 +191,43 @@
     // 🧠 Split the string but do not use the reverse method of arrays. Let's do it manually.
     // 🧠 We suggest using a for loop. Research how to loop backwards over an array, starting at the last element.
     // 🧠 Use a ternary in the return statement.
-    const reverseString = () => {
+    // Step 1: Pass the string
+    // Step 2: Split the string into an array of characters
+    // Step 3: Declare an empty array for the returned reversed array
+    // Step 4: Reverse the array using a for loop
+      // 4a: let i = the length of the split string var - 1
+      // 4b: if i is greater than or = 0
+      // 4c: decrease the value of i by 1
+    // Step 5: push charArray at the index into the reversedArray
+    // Step 6: join the reversed array back into a string, assign to a var
+    // Step 7: Check if the original string is the same as the reversed string using ternaries
 
+    // const reverseString = (str) => {
+    //   const charArray = str.split('') // note when you need to go char by char .split() is a good idea
+    //   let reversedArray = [];
+    //   for (let i = charArray.length - 1; i >=0; i--) { // starting at the last index of the array and working backwards
+    //     reversedArray.push(charArray[i]);
+    //   }
+    //   const reversedStr = reversedArray.join('');
+
+    //   return str === reversedStr 
+    //   ? `It's a palindrome!`
+    //   : reversedStr
+    // }
+
+    // Gab's Solution
+    const reverseString = (str) => {
+      const split = str.split('') // split the string into an array of chars
+      const result = [] // assign result array for reverse string
+      for (let i = split.length - 1; i >= 0; --i) { // looping backwards
+        let char = split[i] // checking if indices are gathered and looped correctly
+        //console.log(char)
+        result.push(char) // pushing individual chars into the result array 1 by 1 backwards
+      }
+       const rejoined = result.join(''); // return the result array in a joined string; assign to a variable to prep for ternary if/else statement
+       return (str === rejoined) // if string === rejoined it's a palindrome, else return the rejoined string
+       ? `It's a palindrome!`
+       : rejoined
     }
 
     // 👉 CHALLENGE 7
@@ -113,9 +242,43 @@
     // ❗ Notes
     // 🧠 Even though object properties have no particular order, to avoid confusing
     // the test runner, please set in each object first name, then age, and finally jsLover.
-    const zip = () => {
+    // Step 1: Pass 3 arrays
+    // Step 2: Declare result array
+    // Step 3: loop over the arrays
+    // Step 4: Create an object inside the loop (note: be sure to use the keys above exactly)
+      // 4a: set name to name at index
+      // 4b: set years to years at index 
+      // 4c: set jsLover to booleans at index
+    // Step 5: Push the object into result (after the for loop)
+    // Step 6: return th efinal result array
+    // const zip = (names, years, booleans) => {
+    //   let result = [];
 
+    //   for (let i = 0; i < names.length; i++) {
+    //     let obj = {
+    //       name: names[i],
+    //       born: years[i],
+    //       jsLover: booleans[i]
+    //     };
+    //     result.push(obj);
+    //   }
+    //   return result;
+    // }
+
+    // Gab's Solution
+    const zip = (names, years, jsLovers) => {
+      let result = []
+      names.forEach ((name, idx) => {
+        let person = {
+          name: name,
+          born: years[idx],
+          jsLover: jsLovers[idx],
+        }
+        result.push(person)
+      })
+      return result
     }
+
 
     // 🧪 TESTS, do not work below this line
     // 🧪 TESTS, do not work below this line
